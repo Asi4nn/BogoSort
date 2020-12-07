@@ -15,27 +15,50 @@ def is_sorted(lst):
     return True
 
 
-def main():
-    iter = 0
-    start_time = time()
+def main(size, tests, file_name):
+    avg_time = 0
+    avg_iter = 0
 
-    lst = [randint(-1000000, 1000000) for i in range(8)]
+    for i in range(tests):
+        iter = 0
+        start_time = time()
 
-    while not is_sorted(lst):
-        iter += 1
-        shuffle(lst)
-        if iter % 1000000 == 0:
-            print("Current iteration:", iter)
+        lst = [randint(-1000000, 1000000) for i in range(size)]
 
-    log = ("List size: " + str(len(lst)) + "\n" +
-          "List: " + str(lst) + "\n" +
-          "Time elapsed: " + str(time() - start_time) + " seconds\n" +
-          "Total iterations: " + str(iter) + "\n\n")
+        while not is_sorted(lst):
+            iter += 1
+            shuffle(lst)
+            if iter % 1000000 == 0:
+                print("Current iteration:", iter)
 
-    print(log)
+        end_time = time()
 
-    f = open("runtimes.txt", "a+")
-    f.write(log)
+        avg_time += end_time - start_time
+        avg_iter += iter
+
+        # log = ("List size: " + str(len(lst)) + "\n" +
+        #       "List: " + str(lst) + "\n" +
+        #       "Time elapsed: " + str(end_time - start_time) + " seconds\n" +
+        #       "Total iterations: " + str(iter) + "\n\n")
+        #
+        # print(log)
+        #
+        # f = open(file_name, "a+")
+        # f.write(log)
+        # f.close()
+
+    avg_time = avg_time / tests
+    avg_iter = round(avg_iter / tests)
+    total_log = ("List size: " + str(len(lst)) + "\n" +
+                "Number of tests: " + str(tests) + "\n" +
+                "Average time elapsed: " + str(avg_time) + " seconds\n" +
+                "Average iterations: " + str(avg_iter) + "\n\n")
+
+    print(total_log)
+
+    f = open(file_name, "a+")
+    f.write(total_log)
     f.close()
 
-main()
+
+main(9, 100, "runtimes.txt")
