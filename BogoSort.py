@@ -19,7 +19,7 @@ def main():
     iter = 0
     start_time = time()
 
-    lst = [randint(-1000000, 1000000) for i in range(10)]
+    lst = [randint(-1000000, 1000000) for i in range(8)]
 
     while not is_sorted(lst):
         iter += 1
@@ -27,10 +27,15 @@ def main():
         if iter % 1000000 == 0:
             print("Current iteration:", iter)
 
-    print("List size:", len(lst))
-    print("List:", lst)
-    print("Time elapsed:", time() - start_time, "seconds")
-    print("Total iterations:", iter)
+    log = ("List size: " + str(len(lst)) + "\n" +
+          "List: " + str(lst) + "\n" +
+          "Time elapsed: " + str(time() - start_time) + " seconds\n" +
+          "Total iterations: " + str(iter) + "\n\n")
 
+    print(log)
+
+    f = open("runtimes.txt", "a+")
+    f.write(log)
+    f.close()
 
 main()
